@@ -129,7 +129,7 @@ const placeOrder = (user, shipping, address, total, payment) => {
         );
         resolve({ order: "success" });
       } else {
-        if(user.refferalRegister){
+        if(user.refferalRegister.refferal==true){
           const userWallet=await wallet.findOne({user:new ObjectId(user._id)})
           const refferedUser=await users.findOne({username:user.refferalRegister.refferedUser})
           const refferedUserWallet=await wallet.findOne({user:new ObjectId(refferedUser._id)})
