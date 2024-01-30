@@ -11,7 +11,7 @@ const nocache = require('nocache')
 const connectDB=require('./config/connection')
 const storage=require('./middleware/multer')
 const flash=require('connect-flash')
-
+const userController=require('./controller/usercontroller')
 
 const PORT=process.env.PORT||3000
 const HOST=process.env.HOST
