@@ -200,16 +200,19 @@ const placeOrder = (user, shipping, address, total, payment) => {
             user: user._id,
             order: [orderData],
           })
+          await newOrder.save();
+        resolve({ order: "success" });
         }else{
           const newOrder = new order({
             user: user._id,
             order: [orderData],
           })
+          await newOrder.save();
+        resolve({ order: "success" });
         }
         
 
-        await newOrder.save();
-        resolve({ order: "success" });
+        
       }
 
       
