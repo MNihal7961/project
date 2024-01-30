@@ -1,0 +1,362 @@
+<%- include('../partials/user-head.ejs') %>
+  <%- include('../partials/user-nav.ejs') %>
+    <!-- BANNER -->
+    <div id="carouselExampleDark" class="carousel carousel-dark slide">
+      <div class="carousel-indicators">
+        <% bannerData.forEach((item, index)=> { %>
+          <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="<%= index %>"
+            class="<%= index === 0 ? 'active' : '' %>" aria-label="Slide <%= index + 1 %>"></button>
+          <% }); %>
+      </div>
+      <div class="carousel-inner">
+        <% bannerData.forEach((item, index)=> { %>
+          <div class="carousel-item <%= index === 0 ? 'active' : '' %>" data-bs-interval="10000">
+            <img src="/bannerImages/<%= item.image %>" class="d-block w-100" alt="<%= item.title %>">
+            <div class="carousel-caption d-none d-md-block">
+              <h3 class="text-white fw-bold">
+                <%= item.title %>
+              </h3>
+              <p class="text-white fw-bold">
+                <%= item.description %>
+              </p>
+            </div>
+          </div>
+          <% }); %>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+    <!-- BANNER -->
+
+    <!-- brand -->
+    <section style="background-color: #014122;">
+      <div class="container-fluid p-0">
+        <div class="row  d-flex justify-content-between align-items-cenetr m-0 p-0">
+          <% brandData.forEach(brand=> { %>
+            <div class="col-sm-12 col-md-12 col-lg-2 py-4 text-center border-top border-white ">
+              <a href="" class="text-white text-decoration-none brand-font"><%-brand.brand%></a>
+            </div>
+            <% }) %>
+        </div>
+      </div>
+    </section>
+    <!-- brand -->
+
+    <!-- shop -->
+    <section>
+      <div class="py-3 py-md-5 ">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12 col-sm-4">
+              <h2 class="text-center my-3 fw-500" style="color: #014122;">SHOP NOW</h1>
+            </div>
+
+            <div class="row custom-a">
+              <% productData.forEach((data)=> { %>
+
+                <div class="col d-flex justify-content-around flex-wrap col-lg-3">
+                  <div class="custom-card-container ms-5 mt-5 position-relative">
+                    <form action="/user/wishlist/add/<%-data._id%>" method="post" class="position-relative">
+                      <button aria-hidden="false" type="submit"
+                        class="border-0 custom-icon-heart position-absolute top-0 end-0 py-2 px-2"
+                        aria-label="Add to Wishlist">
+                        <i class="fa-regular fa-heart"></i>
+                      </button>
+                    </form>
+                    <a href="/user/product/details/<%-data.id%>">
+                      <img class="img-fluid card-img-top" src="/<%=data.images[0]%>" alt="Card image cap"
+                        style="height: 190px; width: 210px;">
+                    </a>
+                    <div class="custom-additional-info ">
+                      <a href="/user/product/details/<%-data.id%>" >
+                        <p class="fw-bold"> 
+                          <%=data.title%>
+                        </p>
+                      </a>
+                      <p class="custom-p">
+                        <% if (data.sellingprice==data.mrp) { %>
+                          <strong class="fw-bold">₹<%=data.mrp%></strong>
+                          <% } %>
+                            <% if (data.sellingprice<data.mrp) { %>
+                              <strong><strike class="text-danger"><%-data.mrp%></strike> <strong
+                                  class="text-success"><%-data.sellingprice%></strong></strong>
+                              <% } %>
+                                <% if (data.sellingprice < data.mrp) { %>
+                                  | <span class="text-success fw-bold">Offer</span>
+                                  <% } %>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+
+                <% }) %>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class=" d-flex justify-content-center  align-items-cenetr">
+        <form>
+          <a href="/user/shop" class="btn rounded-pill  border-success text-success text-center px-5">View
+            All</a>
+        </form>
+      </div>
+      <hr>
+    </section>
+    <!-- shop -->
+
+    <!-- topselling -->
+    <section>
+      <div class="py-3 py-md-5 ">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12 col-sm-4">
+              <h2 class="text-center my-3 fw-500" style="color: #014122;">Top Selling</h1>
+            </div>
+
+            <div class="row custom-a">
+              <% productData1.forEach((data)=> { %>
+
+                <div class="col d-flex justify-content-around flex-wrap col-lg-3">
+                  <div class="custom-card-container ms-5 mt-5 position-relative">
+                    <form action="/user/wishlist/add/<%-data._id%>" method="post" class="position-relative">
+                      <button type="submit" class="btn custom-icon-heart position-absolute top-0 end-0 py-2 px-2"
+                        aria-label="Add to Wishlist">
+                        <i class="fa-regular fa-heart"></i>
+                      </button>
+                    </form>
+                    <a href="/user/product/details/<%-data.id%>">
+                      <img class="img-fluid card-img-top" src="/<%=data.images[0]%>" alt="Card image cap"
+                        style="height: 190px; width: 210px;">
+                    </a>
+                    <div class="custom-additional-info ">
+                      <a href="/user/product/details/<%-data.id%>">
+                        <p>
+                          <%=data.title%>
+                        </p>
+                      </a>
+                      <p class="custom-p">
+                        <% if (data.sellingprice==data.mrp) { %>
+                          <strong>₹<%=data.mrp%></strong>
+                          <% } %>
+                            <% if (data.sellingprice<data.mrp) { %>
+                              <strong><strike class="text-danger"><%-data.mrp%></strike> <strong
+                                  class="text-success"><%-data.sellingprice%></strong></strong>
+                              <% } %>
+                                <% if (data.sellingprice < data.mrp) { %>
+                                  | <span class="text-success fw-bold">Offer</span>
+                                  <% } %>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+
+                <% }) %>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      
+      <hr>
+    </section>
+    <!-- topselling -->
+
+    <!-- gallery -->
+    <section>
+      <div class="row">
+        <div class="col-md-12 col-sm-4">
+          <h2 class="text-center my-3 fw-500" style="color: #014122;">Gallery</h1>
+        </div>
+      </div>
+      <div class="py-3 py-md-5">
+        <div class="container">
+          <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <div class="row">
+                  <div class="col-md-6">
+                    <p class="mb-4 align-center display-7 mt-5 fw-bold customp">
+                      "Retro to Future" is like a time-traveling shoe store for cool sneakers! It's an online shop that
+                      sells awesome shoes inspired by the past ('retro') and futuristic styles ('future'). So, you can
+                      step into the past with classic kicks or jump ahead with cutting-edge designs, all in one place.
+                      It's a sneaker paradise for people who love the timeless and the trendsetting. Happy shoe
+                      shopping! 👟✨
+                    </p>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="image-wrapper mb-4">
+                      <img class="img-fluid" src="/images/nike-just-do-it.jpg" alt="First slide" />
+                      <div class="overlay">Retro to Future.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Add more carousel items as needed -->
+              <div class="carousel-item">
+                <div class="row">
+                  <div class="col-md-6">
+                    <p class="mb-4 align-center display-7 mt-5 fw-bold customp">
+                      "Level up" on our sneaker shop means taking your style to a whole new level! It's like upgrading
+                      your sneaker game to something awesome. Explore our website to find the coolest kicks that will
+                      boost your fashion and take your shoe collection to new heights. Get ready to step up your style
+                      with the latest and trendiest sneakers we have to offer! 🚀👟
+                    </p>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="image-wrapper mb-4">
+                      <img class="img-fluid" src="/images/adidas.jpg" alt="Second slide" />
+                      <div class="overlay">Level Up.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="carousel-item">
+                <div class="row">
+                  <div class="col-md-6">
+                    <p class="mb-4 align-center display-7 mt-5 fw-bold customp">
+                      "New Style Games on our sneaker shop mean exciting, fresh, and trendy kicks! Dive into a world
+                      where sneakers aren't just shoes; they're a statement. Check out our latest collection of sneakers
+                      that bring a whole new vibe to your style. It's not just shopping; it's a game-changer for your
+                      look!"
+                    </p>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="image-wrapper mb-4">
+                      <img class="img-fluid" src="/images/nb.jpg" alt="Second slide" />
+                      <div class="overlay">New Style Games.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="carousel-item">
+                <div class="row">
+                  <div class="col-md-6">
+                    <p class="mb-4 align-center display-7 mt-5 fw-bold customp">
+                      "Get ready to be super excited! At our sneaker store, 'Be Hyped,' we're all about bringing you the
+                      coolest and trendiest sneakers that will make you jump for joy. Explore our collection of stylish
+                      kicks that will hype up your shoe game. It's not just shopping; it's a hype experience for your
+                      feet! Step into 'Be Hyped' and step out in style!"
+                    </p>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="image-wrapper mb-4">
+                      <img class="img-fluid" src="/images/asics.jpg" alt="Second slide" />
+                      <div class="overlay">Be Hyped.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+              data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+              data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <hr>
+    </section>
+    <!-- gallery -->
+
+
+    <!-- why choose us -->
+    <div class="container-fluid bg-trasparent my-4 p-3" style="position: relative" id="whychooseus">
+      <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
+      </div>
+    </div>
+    <div class="container marketing" >
+      <div class="row">
+        <div class="col-md-12 col-sm-4">
+          <h2 class="text-center mb-5 fw-500" style="color: #014122;">Why Choose Us?</h1>
+        </div>
+        <div class="col-lg-4">
+          <img class="rounded-circle img-fluid" src="/images/new.png" alt="Generic placeholder image" width="140"
+            height="140">
+          <h2 class="custom-h2">New Styles</h2>
+          <p>Welcome to our sneaker paradise, where style meets comfort! Discover the latest trends that will elevate
+            your sneaker game to new heights. Check out our curated collection of multi-branded kicks designed for the
+            fashion-forward, the trendsetters, and the sneaker enthusiasts.</p>
+        </div>
+        <div class="col-lg-4">
+          <img class="rounded-circle img-fluid" src="/images/genuine.png" alt="Generic placeholder image" width="140"
+            height="140">
+          <h2 class="custom-h2">Genuine Products</h2>
+          <p>Discover the real deal! Our collection features only authentic sneakers from top brands, ensuring you get
+            genuine products that showcase style and quality. Step into confidence with every purchase, knowing that
+            each pair is the real deal from trusted names in the sneaker world. Elevate your style with assurance – we
+            bring you the genuine goodness of iconic brands, right to your doorstep.</p>
+        </div>
+        <div class="col-lg-4">
+          <img class="rounded-circle img-fluid" src="/images/secure.png" alt="Generic placeholder image" width="140"
+            height="140">
+          <h2 class="custom-h2">Secure payment</h2>
+          <p>when you buy your favorite sneakers, your payment information is kept safe and protected. We use advanced
+            technology to make sure your credit card or other payment details are encrypted and cannot be easily
+            accessed by anyone else. So, you can shop for your dream sneakers with confidence, knowing that your
+            transactions are secure and your information is well-protected.</p>
+        </div>
+      </div>
+      <!-- START THE FEATURETTES -->
+
+      <hr class="featurette-divider">
+
+      <div class="row featurette">
+        <div class="col-md-7">
+          <h2 class="featurette-heading custom-h2">ASICS Collabs with <span class="text-muted">Neo-Vintage EX89.</span>
+          </h2>
+          <p class="lead">Singapore-based Foxtrot Uniform, a brand “born out of the love of vintage sneakers” has
+            unveiled a collaboration with ASICS SportStyle, utilizing the EX89 as the basis for a neo-vintage styled
+            silhouette.</p>
+        </div>
+        <div class="col-md-5">
+          <img class="featurette-image img-fluid mx-auto" src="/images/asicshyp.jpg" alt="Generic placeholder image">
+        </div>
+      </div>
+
+      <hr class="featurette-divider">
+
+      <div class="row featurette">
+        <div class="col-md-7 order-md-2">
+          <h2 class="featurette-heading custom-h2">PUMA Debuts In-Line <span class="text-muted">Suede XL Sneakers.</span></h2>
+          <p class="lead">Following its extra-large Suede collaboration with PLEASURES earlier this month, PUMA Dubbed
+            the “Suede XL,” the remixed sneaker features exaggerated proportions inspired by signature skating footwear
+            in the ’90s and early 2000s.</p>
+        </div>
+        <div class="col-md-5 order-md-1">
+          <img class="featurette-image img-fluid mx-auto" src="/images/pumahyp.jpg" alt="Generic placeholder image">
+        </div>
+      </div>
+
+      <hr class="featurette-divider">
+
+      <div class="row featurette mb-3">
+        <div class="col-md-7">
+          <h2 class="featurette-heading custom-h2">Closer Look at the <span class="text-muted">Travis Scott x Air Jordan.</span>
+          </h2>
+          <p class="lead">To the surprise of no one, Travis Scott and Jordan Brand are gearing up for another big year
+            of collaborative releases.As we await news informing us of release details, another breakdown of the “Black
+            Olive” colorway of the duo’s Air Jordan 1 Low OG has surfaced.</p>
+        </div>
+        <div class="col-md-5">
+          <img class="featurette-image img-fluid mx-auto" src="/images/travishyp.jpg" alt="Generic placeholder image">
+        </div>
+      </div>
+
+    </div>
+    <!-- why choose us -->
+    <%- include('../partials/user-foot.ejs') %>

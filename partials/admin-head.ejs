@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+  <head>
+   <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="/images/logo.png">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cdbootstrap/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cdbootstrap/css/cdb.min.css" />
+<!-- Bootstrap Datepicker CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker.min.css" integrity="sha384-xEnaFvq8gFABDNp3nEFwXOG3g/og8cYfJjSF2x1MXkn9dXBCW8POIbgzfqJ0Ppp0" crossorigin="anonymous">
+
+<!-- Bootstrap Datepicker JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js" integrity="sha384-ZvNm6XEWbCiqonv99V4aT1Gc6hLyyL6vI1eMVR4A7O01eMIBadWz1BweEHRnP4u8" crossorigin="anonymous"></script>
+
+<!-- Optionally, include the Bootstrap Datepicker language file -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/locales/bootstrap-datepicker.en.min.js" integrity="sha384-bC1/IEsN42M6tb3Hvzn2gm5CfFCcj5q4Qrr8DRZYN0d6ad9UktP0jbMpqFqXtq1b" crossorigin="anonymous"></script>
+
+  <!-- Font Awesome CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Bootstrap JavaScript and dependencies -->
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha384-oP1+2mxlKOdWbbmGck9jOexzvV4p6AJFJ0PJoVVpDWW2KkLmIq5oqGXsFgj12R7L" crossorigin="anonymous"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/cdbootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Font family -->
+  <link href="https://db.onlinewebfonts.com/c/2aeca327ae0e8ba04bf305f13cb1d589?family=Ravie" rel="stylesheet">
+
+  <!-- Page title -->
+  <title><%- title %></title>
+
+  <!-- DataTables CSS -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK" crossorigin="anonymous"></script>
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+<!-- Bootstrap JS Bundle (includes Popper) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-zpKSbFIo7AvS5BzRlqI26twDj8fuSf+/Z/uA6iD5fOnC4EfS4igdHw7BEV6dNQpH" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div class="first">
+        <P class="text-center align-content-center text-white fw-light bg-success">Check home Page<a href="/admin/home">Go to Home</a></P>
+    </div>
+    <!-- NAVBAR -->
+    <nav class="text-center shadow ">
+      <div class="container-fluid text-center ">
+        <a class="text-center font-weight-bold text-decoration-none" style=" font-size: 50px; font-family: Ravie; color: #014122;" >Drip</a>
+      </div>
+    </nav>
+
+    <!-- SIDEBAR -->
+    <div class="offcanvas offcanvas-start w-auto" tabindex="-1" id="offcanvas" data-bs-keyboard="false" data-bs-backdrop="false">
+      <div class="offcanvas-header">
+          <h6 class="offcanvas-title d-none d-sm-block" id="offcanvas">MAIN MENU</h6>
+          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body px-0">
+          <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-start" id="menu">
+              <li class="nav-item">
+                  <a href="#" class="nav-link text-truncate">
+                   <span class="ms-1 d-none d-sm-inline text-dark fw-bold">MANAGEMENT</span>
+                  </a>
+              </li>
+             
+             
+              <li>
+                  <a href="/admin/user" class="nav-link text-truncate">
+                    <i class="fa-solid fa-users"></i><span class="ms-1 d-none d-sm-inline text-success fw-bold">  Customers</span></a>
+              </li>
+              <li>
+                <a href="#" class="nav-link text-truncate">
+                    <i class="fa-solid fa-tag"></i><span class="ms-1 d-none d-sm-inline text-success fw-bold">  CouponCode</span></a>
+              </li>
+              <li>
+                <a href="/admin/brand" class="nav-link text-truncate">
+                    <i class="fa-solid fa-plus-circle"></i><span class="ms-1 d-none d-sm-inline text-success fw-bold">  Brands</span></a>
+              </li>
+              <li>
+                <a href="/admin/category" class="nav-link text-truncate">
+                    <i class="fa-solid fa-folder-tree"></i><span class="ms-1 d-none d-sm-inline text-success fw-bold">  Catagories</span></a>
+              </li>
+              <li>
+                <a href="/admin/category/offer" class="nav-link text-truncate">
+                  <i class="fa fa-percent" aria-hidden="true"></i><span class="ms-1 d-none d-sm-inline text-success fw-bold">  Catagorie Offer</span></a>
+              </li>
+              <li>
+                <a href="/admin/sales/report" class="nav-link text-truncate">
+                    <i class="fa-solid fa-money-check-dollar"></i><span class="ms-1 d-none d-sm-inline text-success fw-bold">  Sales Report</span></a>
+              </li>
+              <li>
+                <a href="/admin/shipping" class="nav-link text-truncate">
+                    <i class="fa-solid fa-truck"></i><span class="ms-1 d-none d-sm-inline text-success fw-bold">  Shipping</span></a>
+              </li>
+              <li>
+                <a href="/admin/payment" class="nav-link text-truncate">
+                    <i class="fa-solid fa-money-check-dollar"></i><span class="ms-1 d-none d-sm-inline text-success fw-bold">  Payment</span></a>
+              </li>
+
+              <div class="offcanvas-header">
+                <h6 class="offcanvas-title d-none d-sm-block text-dark fw-bold" id="offcanvas">ORDERS</h6>
+              </div>
+              <li>
+                <a href="/admin/order" class="nav-link text-truncate">
+                  <i class="fa-solid fa-cart-flatbed"></i><span class="ms-1 d-none d-sm-inline text-success fw-bold">  Order Management</span></a>
+            </li>
+            <li>
+              <a href="/admin/delivered/orders" class="nav-link text-truncate">
+                <i class="fas fa-shipping-fast"></i><span class="ms-1 d-none d-sm-inline text-success fw-bold">  Delivered Orders</span></a>
+          </li>
+          <li>
+            <a href="/admin/returned/orders" class="nav-link text-truncate">
+              <i class="fa fa-undo" aria-hidden="true"></i></i><span class="ms-1 d-none d-sm-inline text-success fw-bold"> Returned Orders</span></a>
+        </li>
+        <li>
+          <a href="/admin/return/reject" class="nav-link text-truncate">
+            <i class="fa-solid fa-ban"></i><span class="ms-1 d-none d-sm-inline text-success fw-bold">  Return Rejected</span></a>
+         </li>
+             <li>
+              <a href="/admin/cancelled/orders" class="nav-link text-truncate">
+                <i class="fa fa-times" aria-hidden="true"></i></i><span class="ms-1 d-none d-sm-inline text-success fw-bold">  Cancelled Orders</span></a>
+             </li>
+             <li>
+              <a href="/admin/return/requests" class="nav-link text-truncate">
+                <i class="fa-solid fa-code-pull-request"></i></i><span class="ms-1 d-none d-sm-inline text-success fw-bold">  Return Requests</span></a>
+             </li>
+             
+
+              <div class="offcanvas-header">
+                <h6 class="offcanvas-title d-none d-sm-block text-dark fw-bold" id="offcanvas">PRODUCTS</h6>
+              </div>
+
+              <li>
+                <a href="/admin/add/product" class="nav-link text-truncate">
+                    <i class="fa-solid fa-plus"></i><span class="ms-1 d-none d-sm-inline text-success fw-bold">  Add Products</span></a>
+              </li>
+              <li>
+                <a href="/admin/product" class="nav-link text-truncate">
+                    <i class="fa-solid fa-bars-progress"></i><span class="ms-1 d-none d-sm-inline text-success fw-bold">  Product Management</span></a>
+              </li>
+              <li>
+                <a href="/admin/product/offer" class="nav-link text-truncate">
+                  <i class="fa-brands fa-product-hunt"></i><span class="ms-1 d-none d-sm-inline text-success fw-bold">  Offer Management</span></a>
+              </li>
+
+              <div class="offcanvas-header">
+                <h6 class="offcanvas-title d-none d-sm-block text-dark fw-bold" id="offcanvas">ADMIN</h6>
+              </div>
+              <li>
+                <a href="/admin/banner" class="nav-link text-truncate">
+                    <i class="fa-solid fa-image"></i><span class="ms-1 d-none d-sm-inline text-success fw-bold">  Banner Management</span></a>
+              </li>
+              
+              <li>
+                  <a href="/admin/logout" class="nav-link text-truncate">
+                    <i class="fa-solid fa-right-from-bracket text-danger"></i><span class="ms-1 d-none d-sm-inline text-success fw-bold">Logout</span></a>
+              </li>
+          </ul>
+      </div>
+  </div>

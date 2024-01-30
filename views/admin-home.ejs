@@ -1,0 +1,230 @@
+<%- include('../partials/admin-head.ejs') %>
+
+    <style>
+        .my-card {
+            position: absolute;
+            left: 40%;
+            top: -20px;
+            border-radius: 50%;
+        }
+    </style>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col min-vh-100 p-4">
+                <!-- toggler -->
+                <button class="btn float-end btn btn-success" data-bs-toggle="offcanvas" data-bs-target="#offcanvas"
+                    role="button">
+                    MENU
+                </button>
+                <h1 class="text-success text-center">DASHBOARD</h1>
+                <div class="container">
+                    <div class="row w-100 mt-5">
+                        <div class="col-md-3">
+                            <div class="card border-success mx-sm-1 p-3">
+                                <div class="card border-success shadow text-success p-3 my-card">
+                                    <i class="fa-solid fa-cart-plus"></i>
+                                </div>
+                                <div class="text-success text-center mt-3">
+                                    <h4>Total Orders</h4>
+                                </div>
+                                <div class="text-success text-center mt-2">
+                                    <h1><%-orderCount[0]?.totalOrderCount%></h1>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card border-success mx-sm-1 p-3">
+                                <div class="card border-success shadow text-success p-3 my-card">
+                                    <i class="fa-solid fa-sack-dollar"></i>
+                                </div>
+                                <div class="text-success text-center mt-3">
+                                    <h4>Total Revenue</h4>
+                                </div>
+                                <div class="text-success text-center mt-2">
+                                    <h1>₹<%-totalRevenue[0]?.totalPaidAmount%></h1>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card border-success mx-sm-1 p-3">
+                                <div class="card border-success shadow text-success p-3 my-card">
+                                    <i class="fa-solid fa-users"></i>
+                                </div>
+                                <div class="text-success text-center mt-3">
+                                    <h4>Total Users</h4>
+                                </div>
+                                <div class="text-success text-center mt-2">
+                                    <h1><%-userCount%></h1>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card border-success mx-sm-1 p-3">
+                                <div class="card border-success shadow text-success p-3 my-card">
+                                    <i class="fa-solid fa-shoe-prints"></i>
+                                </div>
+                                <div class="text-success text-center mt-3">
+                                    <h4>Total Products</h4>
+                                </div>
+                                <div class="text-success text-center mt-2">
+                                    <h1><%-productCount%></h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container mt-5">
+                    <div class="row">
+                        <div class="col-md-6 p-2">
+                            <h2 class="text-success text-start fw-bold">Payments</h2>
+                            <canvas id="payment-chart"></canvas>
+                        </div>
+                        <div class="col-md-6 p-2">
+                            <h2 class="text-success text-start fw-bold">Revenue Monthly</h2>
+                            <canvas id="revenue-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="container mt-5">
+                    <div class="row">
+                        <div class="col-md-6 p-2">
+                            <h2 class="text-success text-start fw-bold">Revenue Yearly</h2>
+                            <canvas id="yearly-chart"></canvas>
+                        </div>
+                        <div class="col-md-6 p-2">
+                            <h2 class="text-success text-start fw-bold">Revenue Daily</h2>
+                            <canvas id="weekly-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const chartData = {
+                labels: ["COD", "Online","Wallet"],
+                datasets: [{
+                    label: "Payment Methods Used",
+                    data: [<%-codCount%>,<%-onlineCount%>,<%-walletCount%> ],
+                    backgroundColor: ["#FFA07A", "#87CEEB"]
+                }]
+            };
+
+            const paymentChart = document.getElementById('payment-chart');
+            new Chart(paymentChart, {
+                type: "bar",
+                data: chartData,
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+
+            
+
+            const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+
+            const totalValuesArray = [<%-totalValuesArray%>];
+
+            const revenueData = {
+                labels: labels,
+                datasets: [{
+                    label: 'Revenue',
+                    data: totalValuesArray,
+                    fill: false,
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1
+                }]
+            };
+
+            const revenueChart = document.getElementById('revenue-chart');
+            new Chart(revenueChart, {
+                type: 'line',
+                data: revenueData,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+
+<script>
+    const labels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+    const weeklyArray = [ <%-weeklyData.data.map(entry => entry.total)%>];
+
+    const weeklyDataChart = {
+        labels: labels,
+        datasets: [{
+            label: 'Revenue',
+            data: weeklyArray,
+            fill: false,
+            borderColor: 'rgb(75, 192, 192)',
+            tension: 0.1
+        }]
+    };
+
+    const weeklyChart = document.getElementById('weekly-chart');
+    new Chart(weeklyChart, {
+        type: 'line',
+        data: weeklyDataChart,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
+<script>
+    const yearlyLabels = ['2024', '2025', '2026', '2027', '2028'];
+
+    const yearlyArray = [<%-yearArray%>];
+
+    const yearlyDataChart = {
+        labels: yearlyLabels,
+        datasets: [{
+            label: 'Revenue',
+            data: yearlyArray,
+            fill: false,
+            borderColor: 'rgb(75, 192, 192)',
+            tension: 0.1
+        }]
+    };
+
+    const yearlyChart = document.getElementById('yearly-chart');
+    new Chart(yearlyChart, {
+        type: 'bar',
+        data: yearlyDataChart,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
+
+
+
+
+    <%- include('../partials/admin-foot.ejs') %>
+
+    
