@@ -28,6 +28,7 @@ const userActivateWallet_get = async (req, res) => {
     } else {
       const userwallet = await wallet.create({
         user:id,
+        balance:0,
       });
       res.redirect("/user/wallet?message=wallet activated");
     }

@@ -61,41 +61,40 @@
 </script>
 
 
-
-  <div class="wallet-container">
-    <div class="text-center wallet-header text-white align-center" style="height: 100px; background-color: #014122;">
+<% if (walletData) { %>
+<div class="wallet-container">
+  <div class="text-center wallet-header text-white align-center" style="height: 100px; background-color: #014122;">
       <h2 class="p-4">Wallet <i class="fa-solid fa-wallet me-1"></i></h2>
-    </div>
-
-    <div class="balance text-center">Balance: <strong>₹<%-walletData.balance%>.00</strong></div>
-
-    <% if (walletData.history.length > 0) { %>
-      <h4 class="customh4">Transaction History</h4>
-      <ul class="transaction-list" id="transaction-list">
-        <% walletData.history.forEach((data) => { %>
-          <li class="transaction-item">
-            <span><%-data.type%></span>
-            <span>
-              <strong class="<%= data.type === 'Credited' ? 'text-success' : 'text-danger' %>">
-                ₹<%- data.amount %>.0
-              </strong>
-            </span>
-            <span><strong><%-data.description%></strong></span>
-            <span><%-data.date%></span>
-          </li>
-        <% }) %>
-      </ul>
-
-      <nav aria-label="Page navigation">
-        <ul class="pagination" id="pagination"></ul>
-      </nav>
-    <% } else { %>
-      <h6 class="mt-1 text-danger">No Transaction History Found</h6>
-    <% } %>
-
-    <button class="btn btn-primary rounded pill" data-toggle="modal" data-target="#topUpModal">Top Up Wallet</button>
   </div>
 
+  <div class="balance text-center">Balance: <strong>₹<%-walletData.balance%>.00</strong></div>
+
+  <% if (walletData) { %>
+  <% if (walletData.history.length>0) { %>
+  <h4 class="customh4">Transaction History</h4>
+  <ul class="transaction-list" id="transaction-list">
+    <% walletData.history.forEach((data) => { %>
+    <li class="transaction-item">
+      <span><%-data.type%></span>
+      <span>
+        <strong class="<%= data.type === 'Credited' ? 'text-success' : 'text-danger' %>">
+          ₹<%- data.amount %>.0
+        </strong>
+      </span>
+      <span><strong><%-data.description%></strong></span>
+      <span><%-data.date%></span>
+    </li>
+    <% }) %>
+  </ul>
+
+  <nav aria-label="Page navigation">
+    <ul class="pagination" id="pagination"></ul>
+  </nav>
+  <% } else { %>
+  <h6 class="mt-1 text-danger">No Transaction History Found</h6>
+  <% } %>
+  <button class="btn btn-primary rounded pill" data-toggle="modal" data-target="#topUpModal">Top Up Wallet</button>
+  <% } %>
 
   <div class="text-end mt-3">
     <a href="/user/profile/<%-userData._id%>" class="text-decoration-none fw-bold">
@@ -104,7 +103,16 @@
     </a>
   </div>
 </div>
-
+<% } else { %>
+<div class="text-center mt-5 mb-5">
+  <h3>Your wallet is not activated yet.</h3>
+  <img src="/images/empty_wallet.png" class="img-fluid" /><br />
+  <form action="/user/activate/wallet/<%-userData._id%>" method="post" id="activateWalletForm">
+    <button type="button" onclick="activateWallet()" class="btn btn-primary">Activate Wallet</button>
+    <input type="text" value="<%-userData._id%>" hidden name="id">
+  </form>
+</div>
+<% } %>
 
 <!-- Modal -->
 <div class="modal fade" id="topUpModal" tabindex="-1" role="dialog" aria-labelledby="topUpModalLabel" aria-hidden="true">
@@ -136,6 +144,20 @@
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <script>
+  function activateWallet() {
+    Swal.fire({
+      title: "Activate Wallet",
+      text: "Are you sure you want to activate your wallet?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Yes, activate it!",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        document.getElementById("activateWalletForm").submit();
+      }
+    });
+  }
 
   $(document).ready(function () {
     $("#topUpForm").submit((e) => {
