@@ -177,39 +177,40 @@ const getProductDetailsFromOrder = async (userId) => {
 const getAllOrder = async () => {
   try {
     const orderData = await order.aggregate([
-      {
-        $unwind: "$order",
-      },
+      { $unwind: "$order" },
       {
         $project: {
+          _id: 0,
+          oid: "$order._id",
           buyerName: "$order.buyerName",
+          sellerName: "$order.sellerName",
           totalPrice: "$order.totalPrice",
           paymentMethod: "$order.paymentMethod",
+          paymentStatus: "$order.paymentStatus",
+          totalQuantity: "$order.totalQuantity",
           shippingMethod: "$order.shippingMethod",
           orderStatus: "$order.orderStatus",
-          totalQuantity: { $size: "$order.productDetails" },
+          reason: "$order.rejectReason",
+          returnReason: "$order.returnReason",
+          cancelReason: "$order.cancelReason",
           orderedAt: {
-            $dateToString: {
-              date: "$order.orderedAt",
-              format: "%d-%b-%Y",
-            },
+            $dateToString: { format: "%Y-%m-%d", date: "$order.orderedAt" },
           },
-          _id: "$order._id",
         },
       },
-      {
-        $sort: { orderedAt: -1 },
-      },
+      { $sort: { orderedAt: -1 } },
+      { $project: { oid: 1, buyerName: 1, sellerName: 1, totalPrice: 1, paymentMethod: 1, paymentStatus: 1, totalQuantity: 1, shippingMethod: 1, orderStatus: 1, reason: 1, returnReason: 1, cancelReason: 1, orderedAt: 1 } }, // Rename _id to oid
     ]);
 
-    console.log('orderData:', orderData); 
+    console.log('orderData:', orderData);
 
     return orderData;
   } catch (err) {
     console.log(err);
-    return []; 
+    return [];
+  }
 };
-}
+
 
 
 
