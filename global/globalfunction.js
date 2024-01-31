@@ -202,11 +202,15 @@ const getAllOrder = async () => {
       },
     ]);
 
+    console.log('orderData:', orderData); 
+
     return orderData;
   } catch (err) {
     console.log(err);
-  }
+    return []; 
 };
+}
+
 
 
 const getAllOrderProduct = async () => {

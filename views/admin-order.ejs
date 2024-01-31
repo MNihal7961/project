@@ -50,6 +50,7 @@
       </button>
     
     
+      <% if (orderData&&Array.isArray(orderData)) { %>
         <div class="row float-start">
           <div class="col">
             <h3 class="mt-3 text-start ms-3">Order Details</h3>
@@ -195,6 +196,9 @@
               </a>
             </li>
           </ul>
+      <% } else { %>
+        <p>No orders available</p>
+      <% } %>
      
      
     </div>
