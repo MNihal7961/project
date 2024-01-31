@@ -12,6 +12,7 @@ const connectDB=require('./config/connection')
 const storage=require('./middleware/multer')
 const flash=require('connect-flash')
 const userController=require('./controller/usercontroller')
+const morgan=require('morgan')
 
 const PORT=process.env.PORT||3000
 const HOST=process.env.HOST
@@ -22,6 +23,7 @@ app.use(bodyparser.json())
 app.use(bodyparser.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(flash())
+app.use(morgan('tiny'));
 
 app.set('view engine','ejs')
 app.set("views", path.join(__dirname, "views"))
