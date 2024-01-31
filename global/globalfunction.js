@@ -495,7 +495,7 @@ const getAllCancelledOrder = async () => {
           orderedAt: {
             $dateToString: {
               date: "$order.orderedAt",
-              format: "%d-%b-%Y",
+              format: "%d-%m-%Y",
             },
           },
           reason:"$order.cancelReason",
@@ -553,7 +553,7 @@ const getAllReturnRequestOrder=async()=>{
           orderedAt: {
             $dateToString: {
               date: "$order.orderedAt",
-              format: "%d-%b-%Y",
+              format: "%d-%m-%Y",
             },
           },
           reason:"$order.returnReason",
@@ -611,7 +611,7 @@ const getAllDeliveredOrder=async ()=>{
           orderedAt: {
             $dateToString: {
               date: "$order.orderedAt",
-              format: "%d-%b-%Y",
+              format: "%d-%m-%Y",
             },
           },
           reason:"$order.cancelReason",
@@ -669,7 +669,7 @@ const getAllReturnedOrder=async ()=>{
           orderedAt: {
             $dateToString: {
               date: "$order.orderedAt",
-              format: "%d-%b-%Y",
+              format: "%d-%m-%Y",
             },
           },
           reason:"$order.returnReason",
@@ -727,7 +727,7 @@ const getAllReturnRejectOrder=async ()=>{
           orderedAt: {
             $dateToString: {
               date: "$order.orderedAt",
-              format: "%d-%b-%Y",
+              format: "%d-%m-%Y",
             },
           },
           reason:"$order.rejectReason",
