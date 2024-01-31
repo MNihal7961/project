@@ -198,7 +198,7 @@ const getAllOrder = async () => {
           orderedAt: {
             $dateToString: {
               date: "$order.orderedAt",
-              format: "%d-%b-%Y",
+              format: "%d-%m-%Y",
             },
           },
           _id: "$order._id",
