@@ -74,10 +74,10 @@
             </tr>
           </thead>
           <tbody id="orderTableBody">
-            <% orderData.forEach((order, index) => { %>
+            <% orderData.forEach((order) => { %>
               <tr class="text-start">
                 <td>
-                  <strong><%= index + 1 %></strong>
+                  <strong><%=++i%></strong>
                 </td>
                 <td>
                   <strong><%= order.orderedAt %></strong>
