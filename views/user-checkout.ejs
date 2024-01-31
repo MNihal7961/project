@@ -182,21 +182,21 @@
                                                         <input required class="form-check-input" type="radio"
                                                             name="payment" id="flexRadioDefault3"
                                                             value="<%= data.title %>" <% if (data.title=="Drip-Wallet"
-                                                            && walletData.balance < summary) { %>
+                                                            && walletData.balance < summary+100) { %>
                                                         disabled
                                                         <% } %>/>
                                                             <label class="form-check-label" for="flexRadioDefault3">
                                                                 <strong>
                                                                     <%=data.title%>
                                                                 </strong> <br />
-                                                                <% if (data.title!="Drip-Wallet" ) { %>
+                                                                <% if (data.title!="Drip-Wallet" || !walletData) { %>
                                                                     <small class="text-muted">Payment: By
                                                                         <%=data.paymentType%></small><br>
                                                                     <small class="text-muted">Type: <%=data.serverType%>
                                                                             </small><br>
                                                                     <% } %>
-                                                                        <% if (data.title=="Drip-Wallet"
-                                                                            &&walletData.balance<summary) { %>
+                                                                        <% if (data.title=="Drip-Wallet" && walletData.balance<summary) { %>
+                                                                           
                                                                             <span class="text-danger">Insufficient
                                                                                 Balance</span><br>
                                                                                 <small class="text-primary">Try another one</small><br>
