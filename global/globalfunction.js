@@ -181,13 +181,6 @@ const getAllOrder = async () => {
         $unwind: "$order",
       },
       {
-        $match: {
-          "order.orderStatus": {
-            $nin: ["Delivered", "Cancelled", "Returned", "Returned Request Sented","Return Rejected"]
-          }
-        },
-      },
-      {
         $project: {
           buyerName: "$order.buyerName",
           totalPrice: "$order.totalPrice",

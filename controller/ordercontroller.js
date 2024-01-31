@@ -110,7 +110,7 @@ const adminorder_get = async (req, res) => {
   var i = 0;
   const productData = await global.getAllOrderProduct();
   const orderData = await global.getAllOrder();
-
+  console.log(orderData)
   res.render("admin-order", { title, i, orderData, productData });
  }catch(err){
   res.status(500).render('500')
