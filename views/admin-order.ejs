@@ -60,119 +60,124 @@
             <tr class="text-center">
               <th>No</th>
               <th>Date</th>
-              <th>Buyer Name</th>
+              <th>BuyerName</th>
               <th>Product</th>
               <th>Item</th>
               <th>Size</th>
               <th>Price</th>
               <th>Qty</th>
               <th>Payment</th>
-              <th>Total Qty</th>
-              <th>Total Price</th>
+              <th>Total-Qty</th>
+              <th>TotalPrice</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody id="orderTableBody">
-            <% orderData.forEach((order) => { %>
-              <tr class="text-start">
-                <td>
-                  <strong><%=++i%></strong>
-                </td>
-                <td>
-                  <strong><%= order.orderedAt %></strong>
-                </td>
-                <td>
-                  <strong><%= order.buyerName %></strong>
-                </td>
-                <td>
-                  <% order.products.forEach((product) => { %>
-                    <img src="<%= product.productImage[0] %>" style="width: 50px; height: 50px" />
-                  <% }) %>
-                </td>
-                <td>
-                  <% order.products.forEach((product) => { %>
-                    <strong class="<%= product.status ? '' : 'strike-red' %>"><%= product.productsName %></strong> <br />
-                  <% }) %>
-                </td>
-                <td>
-                  <% order.products.forEach((product) => { %>
-                    <strong class="<%= product.status ? '' : 'strike-red' %>"><%= product.size %></strong> <br />
-                  <% }) %>
-                </td>
-                <td>
-                  <% order.products.forEach((product) => { %>
-                    <strong class="<%= product.status ? '' : 'strike-red' %>">₹<%= product.productsPrice %></strong> <br />
-                  <% }) %>
-                </td>
-                <td>
-                  <% order.products.forEach((product) => { %>
-                    <strong class="<%= product.status ? '' : 'strike-red' %>"><%= product.quantity %></strong><small class="text-muted">nos</small> <br />
-                  <% }) %>
-                </td>
-                <td>
-                  <strong><%= order.paymentMethod %></strong>
-                </td>
-                <td>
-                  <strong><%= order.totalQuantity %></strong><small class="text-muted">nos</small>
-                </td>
-                <td>
-                  <strong>₹<%= order.totalPrice %></strong>
-                </td>
-                <td class="<%= getOrderStatusClass(order.orderStatus) %>">
-                  <i class="fas fa-check-circle fa-shake"></i>
-                  <strong><%= order.orderStatus %></strong>
-                </td>
-                <td>
-                  <% if (order.orderStatus === 'Delivered') { %>
-                    <strong class="text-success">Order Delivered</strong>
-                  <% } else if (order.orderStatus === 'Cancelled') { %>
-                    <strong class="text-danger">User canceled the order</strong>
-                  <% } else if (order.orderStatus === 'Returned') { %>
-                    <strong class="text-primary">User Returned This Order</strong>
-                  <% } else { %>
-                    <div class="dropdown">
-                      <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                        Change Order Status
-                      </button>
-                      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <% if (order.orderStatus === "Pending") { %>
-                          <li value="Processing">
-                            <a class="dropdown-item" onclick="orderProcess('<%- order._id %>','Processing')">
-                              <i class="fas fa-spinner text-success"></i>
-                              Processing
-                            </a>
-                          </li>
-                        <% } %> 
-                        <% if (order.orderStatus === "Processing") { %>
-                          <li value="Placed">
-                            <a class="dropdown-item" onclick="orderPlace('<%- order._id %>','Placed')">
-                              <i class="fas fa-shopping-basket text-success"></i>
-                              Placed
-                            </a>
-                          </li>
-                        <% } %> 
-                        <% if (order.orderStatus === "Placed") { %>
-                          <li value="Shipped" aria-disabled="true">
-                            <a class="dropdown-item" onclick="orderShip('<%- order._id %>','Shipped')">
-                              <i class="fa-solid fa-truck text-success"></i>
-                              Shipped
-                            </a>
-                          </li>
-                        <% } %> 
-                        <% if (order.orderStatus === "Shipped") { %>
-                          <li value="Delivered" onclick="orderDelivery('<%- order._id %>','Delivered')">
-                            <a class="dropdown-item">
-                              <i class="fas fa-check-circle text-success fw-bold"></i>
-                              Delivered
-                            </a>
-                          </li>
-                        <% } %>
-                      </ul>
-                    </div>
-                  <% } %>
-                </td>
-              </tr>
+            <% let i=0; %> <% orderData.forEach((order)=> { %>
+  
+            <tr class="text-start">
+              <td>
+                <strong> <%=++i%> </strong>
+              </td>
+              <td>
+                <strong> <%=order.orderedAt%> </strong>
+              </td>
+              <td>
+                <strong> <%=order.buyerName%> </strong>
+              </td>
+              <td>
+                <% productData[i - 1].forEach((element)=> { %>
+                <img
+                  src="/<%-element.productImage[0]%>"
+                  style="width: 50px; height: 50px"
+                />
+                <% }) %>
+              </td>
+              <td>
+                <% productData[i - 1].forEach((element)=> { %>
+                <strong> <%=element.productsName%> </strong> <br />
+                <% }) %>
+              </td>
+              <td>
+                <% productData[i - 1].forEach((element)=> { %>
+                <strong> <%=element.size%> </strong> <br />
+                <% }) %>
+              </td>
+              <td>
+                <% productData[i - 1].forEach((element)=> { %>
+                <strong>₹<%=element.productsPrice%></strong> <br />
+                <% }) %>
+              </td>
+              <td>
+                <% productData[i - 1].forEach((element)=> { %>
+                <strong> <%=element.quantity%> </strong
+                ><small class="text-muted">nos</small> <br />
+                <% }) %>
+              </td>
+              <td>
+                <strong> <%=order.paymentMethod%> </strong>
+              </td>
+              <td>
+                <strong> <%=order.totalQuantity%> </strong
+                ><small class="text-muted">nos</small>
+              </td>
+              <td>
+                <strong>₹ <%=order.totalPrice%></strong>
+              </td>
+              <td>
+                <strong class="text-success fw-bold"> <%= order.orderStatus %> </strong>
+              </td>
+              <td>
+                <% if (order.orderStatus === 'Delivered') { %>
+                  <strong class="text-success">Order Delivered</strong>
+                <% } else if (order.orderStatus === 'Cancelled') { %>
+                  <strong class="text-danger">User canceled the order</strong>
+                <% } else if (order.orderStatus === 'Returned') { %>
+                  <strong class="text-primary">User Returned This Order</strong>
+                <% } else { %>
+                  <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                      Change Order Status
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <% if (order.orderStatus === "Pending") { %>
+                        <li value="Processing">
+                          <a class="dropdown-item" onclick="orderProcess('<%- order._id %>','Processing')">
+                            <i class="fas fa-spinner text-success"></i>
+                            Processing
+                          </a>
+                        </li>
+                      <% } %> 
+                      <% if (order.orderStatus === "Processing") { %>
+                        <li value="Placed">
+                          <a class="dropdown-item" onclick="orderPlace('<%- order._id %>','Placed')">
+                            <i class="fas fa-shopping-basket text-success"></i>
+                            Placed
+                          </a>
+                        </li>
+                      <% } %> 
+                      <% if (order.orderStatus === "Placed") { %>
+                        <li value="Shipped" aria-disabled="true">
+                          <a class="dropdown-item" onclick="orderShip('<%- order._id %>','Shipped')">
+                            <i class="fa-solid fa-truck text-success"></i>
+                            Shipped
+                          </a>
+                        </li>
+                      <% } %> 
+                      <% if (order.orderStatus === "Shipped") { %>
+                        <li value="Delivered" onclick="orderDelivery('<%- order._id %>','Delivered')">
+                          <a class="dropdown-item">
+                            <i class="fas fa-check-circle text-success fw-bold"></i>
+                            Delivered
+                          </a>
+                        </li>
+                      <% } %>
+                    </ul>
+                  </div>
+                <% } %>
+              </td>
+            </tr>
             <% }) %>
           </tbody>
         </table>
