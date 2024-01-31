@@ -105,17 +105,17 @@ const orderdetails_get = async (req, res) => {
 
 // ADMIN-ORDERS
 const adminorder_get = async (req, res) => {
- try{
-  const title = "orders";
-  var i = 0;
-  const productData = await global.getAllOrderProduct();
-  const orderData = await global.getAllOrder();
-  console.log(orderData)
-  res.render("admin-order", { title, i, orderData, productData });
- }catch(err){
-  res.status(500).render('500')
- }
-};
+  try{
+   const title = "orders";
+   var i = 0;
+   const productData = await global.getAllOrderProduct();
+   const orderData = await global.getAllOrder();
+ 
+   res.render("admin-order", { title, i, orderData, productData });
+  }catch(err){
+   res.status(500).render('500')
+  }
+ };
 
 // ADMIN PROCESS-ORDER
 const adminorderprocess_post = async (req, res) => {

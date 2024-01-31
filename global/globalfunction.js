@@ -177,42 +177,43 @@ const getProductDetailsFromOrder = async (userId) => {
 const getAllOrder = async () => {
   try {
     const orderData = await order.aggregate([
-      { $unwind: "$order" },
       {
-        $project: {
-          _id: 0,
-          oid: "$order._id",
-          buyerName: "$order.buyerName",
-          sellerName: "$order.sellerName",
-          totalPrice: "$order.totalPrice",
-          paymentMethod: "$order.paymentMethod",
-          paymentStatus: "$order.paymentStatus",
-          totalQuantity: "$order.totalQuantity",
-          shippingMethod: "$order.shippingMethod",
-          orderStatus: "$order.orderStatus",
-          reason: "$order.rejectReason",
-          returnReason: "$order.returnReason",
-          cancelReason: "$order.cancelReason",
-          orderedAt: {
-            $dateToString: { format: "%Y-%m-%d", date: "$order.orderedAt" },
-          },
+        $unwind: "$order",
+      },
+      {
+        $match: {
+          "order.orderStatus": {
+            $nin: ["Delivered", "Cancelled", "Returned", "Returned Request Sented","Return Rejected"]
+          }
         },
       },
-      { $sort: { orderedAt: -1 } },
-      { $project: { oid: 1, buyerName: 1, sellerName: 1, totalPrice: 1, paymentMethod: 1, paymentStatus: 1, totalQuantity: 1, shippingMethod: 1, orderStatus: 1, reason: 1, returnReason: 1, cancelReason: 1, orderedAt: 1 } }, // Rename _id to oid
+      {
+        $project: {
+          buyerName: "$order.buyerName",
+          totalPrice: "$order.totalPrice",
+          paymentMethod: "$order.paymentMethod",
+          shippingMethod: "$order.shippingMethod",
+          orderStatus: "$order.orderStatus",
+          totalQuantity: { $size: "$order.productDetails" },
+          orderedAt: {
+            $dateToString: {
+              date: "$order.orderedAt",
+              format: "%d-%b-%Y",
+            },
+          },
+          _id: "$order._id",
+        },
+      },
+      {
+        $sort: { orderedAt: -1 },
+      },
     ]);
-
-    console.log('orderData:', orderData);
 
     return orderData;
   } catch (err) {
     console.log(err);
-    return [];
   }
 };
-
-
-
 
 const getAllOrderProduct = async () => {
   try {

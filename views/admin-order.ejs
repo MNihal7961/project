@@ -48,9 +48,13 @@
       >
         MENU
       </button>
+      
+
+      <% if (orderData.length<=0) { %>
+       <h1 class="text-center mt-5">No Orders To Manage!</h1>
+      <% } %>
     
-    
-      <% if (orderData) { %>
+      <% if (orderData.length>0) { %>
         <div class="row float-start">
           <div class="col">
             <h3 class="mt-3 text-start ms-3">Order Details</h3>
@@ -97,22 +101,22 @@
               </td>
               <td>
                 <% productData[i - 1].forEach((element)=> { %>
-                <strong> <%=element.productsName%> </strong> <br />
+                <strong class="<%= element.status ? '' : 'strike-red' %>"> <%=element.productsName%> </strong> <br />
                 <% }) %>
               </td>
               <td>
                 <% productData[i - 1].forEach((element)=> { %>
-                <strong> <%=element.size%> </strong> <br />
+                <strong class="<%= element.status ? '' : 'strike-red' %>"> <%=element.size%> </strong> <br />
                 <% }) %>
               </td>
               <td>
                 <% productData[i - 1].forEach((element)=> { %>
-                <strong>₹<%=element.productsPrice%></strong> <br />
+                <strong class="<%= element.status ? '' : 'strike-red' %>">₹<%=element.productsPrice%></strong> <br />
                 <% }) %>
               </td>
               <td>
                 <% productData[i - 1].forEach((element)=> { %>
-                <strong> <%=element.quantity%> </strong
+                <strong class="<%= element.status ? '' : 'strike-red' %>"> <%=element.quantity%> </strong
                 ><small class="text-muted">nos</small> <br />
                 <% }) %>
               </td>
@@ -126,63 +130,82 @@
               <td>
                 <strong>₹ <%=order.totalPrice%></strong>
               </td>
-              <td>
-                <strong class="text-success fw-bold"> <%= order.orderStatus %> </strong>
+              <td
+                class="<% if (order.orderStatus === 'Pending') { %> text-warning <% } else if (order.orderStatus === 'Processing') { %> text-info <% } else if (order.orderStatus === 'Placed') { %> text-primary <% } else if (order.orderStatus === 'Shipped') { %> text-secondory <% } else if (order.orderStatus === 'Delivered') { %> text-success <% } else if (order.orderStatus === 'Returned') { %> text-warning <% } else if (order.orderStatus === 'Cancelled') { %> text-danger <% } %>"
+              >
+                <i class="fas fa-check-circle fa-shake"></i
+                ><strong> <%= order.orderStatus %> </strong>
               </td>
+  
               <td>
-                <% if (order.orderStatus === 'Delivered') { %>
-                  <strong class="text-success">Order Delivered</strong>
-                <% } else if (order.orderStatus === 'Cancelled') { %>
-                  <strong class="text-danger">User canceled the order</strong>
-                <% } else if (order.orderStatus === 'Returned') { %>
+                <% if (order.orderStatus==='Delivered' ) { %>
+                <strong class="text-success">Order Delivered</strong>
+                <% } else if (order.orderStatus==='Cancelled' ) { %>
+                <strong class="text-danger">User canceled the order</strong>
+                <% }else if (order.orderStatus==='Returned' ) { %>
                   <strong class="text-primary">User Returned This Order</strong>
-                <% } else { %>
-                  <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                      Change Order Status
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <% if (order.orderStatus === "Pending") { %>
-                        <li value="Processing">
-                          <a class="dropdown-item" onclick="orderProcess('<%- order._id %>','Processing')">
-                            <i class="fas fa-spinner text-success"></i>
-                            Processing
-                          </a>
-                        </li>
-                      <% } %> 
-                      <% if (order.orderStatus === "Processing") { %>
-                        <li value="Placed">
-                          <a class="dropdown-item" onclick="orderPlace('<%- order._id %>','Placed')">
-                            <i class="fas fa-shopping-basket text-success"></i>
-                            Placed
-                          </a>
-                        </li>
-                      <% } %> 
-                      <% if (order.orderStatus === "Placed") { %>
-                        <li value="Shipped" aria-disabled="true">
-                          <a class="dropdown-item" onclick="orderShip('<%- order._id %>','Shipped')">
-                            <i class="fa-solid fa-truck text-success"></i>
-                            Shipped
-                          </a>
-                        </li>
-                      <% } %> 
-                      <% if (order.orderStatus === "Shipped") { %>
-                        <li value="Delivered" onclick="orderDelivery('<%- order._id %>','Delivered')">
-                          <a class="dropdown-item">
-                            <i class="fas fa-check-circle text-success fw-bold"></i>
-                            Delivered
-                          </a>
-                        </li>
-                      <% } %>
-                    </ul>
-                  </div>
+                <% }
+                 else { %>
+                <div class="dropdown">
+                  <button
+                    class="btn btn-primary dropdown-toggle"
+                    type="button"
+                    id="dropdownMenuButton"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    Change Order Status
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <% if (order.orderStatus=="Pending" ) { %>
+                    <li value="Processing">
+                      <a
+                        class="dropdown-item"
+                        onclick="orderProcess('<%-order._id%>','Processing')"
+                      >
+                        <i class="fas fa-spinner text-success"></i>
+                        Processing
+                      </a>
+                    </li>
+                    <% } %> <% if (order.orderStatus=="Processing" ) { %>
+                    <li value="Placed">
+                      <a
+                        class="dropdown-item"
+                        onclick="orderPlace('<%-order._id%>','Placed')"
+                      >
+                        <i class="fas fa-shopping-basket text-success"></i>
+                        Placed
+                      </a>
+                    </li>
+                    <% } %> <% if (order.orderStatus=="Placed" ) { %>
+                    <li value="Shipped" aria-disabled="true">
+                      <a
+                        class="dropdown-item"
+                        onclick="orderShip('<%-order._id%>','Shipped')"
+                      >
+                        <i class="fa-solid fa-truck text-success"></i>
+                        Shipped
+                      </a>
+                    </li>
+                    <% } %> <% if (order.orderStatus=="Shipped" ) { %>
+                    <li
+                      value="Delivered"
+                      onclick="orderDelivery('<%-order._id%>','Delivered')"
+                    >
+                      <a class="dropdown-item">
+                        <i class="fas fa-check-circle text-success fw-bold"></i>
+                        Delivered
+                      </a>
+                    </li>
+                    <% } %>
+                  </ul>
+                </div>
                 <% } %>
               </td>
             </tr>
             <% }) %>
           </tbody>
         </table>
-        
       
           <ul class="pagination border-0 text-end">
             <li class="page-item" id="prevPage">
@@ -196,10 +219,7 @@
               </a>
             </li>
           </ul>
-      <% } else { %>
-        <p>No orders available</p>
       <% } %>
-     
      
     </div>
   </div>
