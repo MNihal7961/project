@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecommmerce
+spec:
+  selector:
+    matchLabels:
+      app: ecommmerce
+  template:
+    metadata:
+      labels:
+        app: ecommmerce
+    spec:
+      containers:
+      - name: ecommmerce
+        image: nihal7961/drip:test
+        ports:
+        - containerPort: 4000
+        env:
+        - name: MONOGO_URL
+          value: "mongodb+srv://socieo:socieodbpass@social-media.ksb6luw.mongodb.net/?retryWrites=true&w=majority&appName=social-media"
+        - name:  PORT
+          value: "4000"
+        - name: MAIL_USER
+          value: "dripstofficial@gmail.com"
+        - name: MAIL_PASSWORD
+          value: "eqty vgmm nelh wiql"
+        - name: KEY_ID
+          value:  "rzp_test_b17TxK3brF48ub"
+        - name: KEY_SECRET
+          value: "6dMOUSzCg1h01Q3TW0mmq6UR"
+        - name: ADMIN_EMAIL
+          value: "admin@gmail.com"
+        - name: ADMIN_PASSWORD
+          value: "admin"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name:  ecommmerce
+spec:
+  selector:
+    app:  ecommmerce
+  ports:
+  - port:  4000
+    targetPort:  4000
+  type: NodePort
